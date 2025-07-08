@@ -35,9 +35,12 @@ form div {
 
 label {
   display: block;
-  margin-bottom: 5px;
-  color: #555;
-  font-weight: 500;
+  margin-bottom: 8px;
+  color: #2c3e50;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 input {
@@ -45,7 +48,12 @@ input {
   padding: 15px 20px;
   border: 2px solid #e9ecef;
   border-radius: 12px;
+  padding: 15px 20px;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
   font-size: 16px;
+  transition: all 0.3s ease;
+  background: #f8f9fa;
   transition: all 0.3s ease;
   background: #f8f9fa;
 }
@@ -56,18 +64,28 @@ input:focus {
   background: white;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
   transform: translateY(-2px);
+  border-color: #667eea;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  transform: translateY(-2px);
 }
 
 button {
   width: 100%;
   padding: 15px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 15px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
   border-radius: 12px;
+  border-radius: 12px;
   font-size: 16px;
   font-weight: 600;
+  font-weight: 600;
   cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
@@ -75,11 +93,15 @@ button {
 button:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
 }
 
 button:disabled {
   background: #ccc;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
   transform: none;
   box-shadow: none;
 }
@@ -101,11 +123,19 @@ button:disabled {
 }
 
 .language-selector select {
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  padding: 10px 15px;
+  border: 2px solid #e9ecef;
+  border-radius: 10px;
   font-size: 14px;
+  background: #f8f9fa;
+  transition: all 0.3s ease;
+}
+
+.language-selector select:focus {
+  outline: none;
+  border-color: #667eea;
   background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 .register-link {
