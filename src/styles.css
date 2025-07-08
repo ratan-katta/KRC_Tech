@@ -14,8 +14,8 @@ body {
 }
 
 .app-header {
-  background: #6c757d;
-  border-bottom: 2px solid #5a6268;
+  background: white;
+  border-bottom: 2px solid #e9ecef;
   margin-bottom: 20px;
   padding: 20px;
 }
@@ -27,15 +27,10 @@ body {
 }
 
 .company-name {
-  color: white;
+  color: #333;
   margin: 0;
   font-size: 2.5rem;
   font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-  background: linear-gradient(45deg, #fff, #f0f8ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 
@@ -81,8 +76,8 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  background: #6c757d;
-  border-top: 2px solid #5a6268;
+  background: white;
+  border-top: 2px solid #e9ecef;
   padding: 8px;
   display: flex;
   justify-content: center;
@@ -91,9 +86,8 @@ body {
 }
 
 .app-footer p {
-  color: #ffeb3b;
+  color: #333;
   margin: 0;
   font-weight: bold;
   font-size: 1.1rem;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
