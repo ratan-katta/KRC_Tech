@@ -1,0 +1,72 @@
+<div class="register-container">
+  <div class="language-selector">
+    <label for="language">{{translationService.translate('selectLanguage')}}:</label>
+    <select id="language" [(ngModel)]="selectedLanguage" (change)="onLanguageChange()">
+      <option *ngFor="let lang of translationService.languages" [value]="lang.code">
+        {{lang.name}}
+      </option>
+    </select>
+  </div>
+  
+  <h2>{{translationService.translate('register')}}</h2>
+  <form #registerForm="ngForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="fullName">{{translationService.translate('fullName')}}:</label>
+      <input type="text" id="fullName" name="fullName" [(ngModel)]="fullName" #fullNameField="ngModel" required minlength="2">
+      <div *ngIf="fullNameField.invalid && fullNameField.touched" class="error">
+        <span *ngIf="fullNameField.errors?.['required']">{{translationService.translate('fullName')}} is required</span>
+        <span *ngIf="fullNameField.errors?.['minlength']">{{translationService.translate('fullName')}} must be at least 2 characters</span>
+      </div>
+    </div>
+    
+    <div>
+      <label for="email">{{translationService.translate('email')}}:</label>
+      <input type="email" id="email" name="email" [(ngModel)]="email" #emailField="ngModel" required email>
+      <div *ngIf="emailField.invalid && emailField.touched" class="error">
+        <span *ngIf="emailField.errors?.['required']">{{translationService.translate('email')}} is required</span>
+        <span *ngIf="emailField.errors?.['email']">Please enter a valid email</span>
+      </div>
+    </div>
+    
+    <div>
+      <label for="username">{{translationService.translate('username')}}:</label>
+      <input type="text" id="username" name="username" [(ngModel)]="username" #usernameField="ngModel" required minlength="3">
+      <div *ngIf="usernameField.invalid && usernameField.touched" class="error">
+        <span *ngIf="usernameField.errors?.['required']">{{translationService.translate('username')}} is required</span>
+        <span *ngIf="usernameField.errors?.['minlength']">{{translationService.translate('username')}} must be at least 3 characters</span>
+      </div>
+    </div>
+    
+    <div>
+      <label for="password">{{translationService.translate('password')}}:</label>
+      <input type="password" id="password" name="password" [(ngModel)]="password" #passwordField="ngModel" required minlength="6">
+      <div *ngIf="passwordField.invalid && passwordField.touched" class="error">
+        <span *ngIf="passwordField.errors?.['required']">{{translationService.translate('password')}} is required</span>
+        <span *ngIf="passwordField.errors?.['minlength']">{{translationService.translate('password')}} must be at least 6 characters</span>
+      </div>
+    </div>
+    
+    <div>
+      <label for="confirmPassword">{{translationService.translate('confirmPassword')}}:</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="confirmPassword" #confirmPasswordField="ngModel" required>
+      <div *ngIf="confirmPasswordField.invalid && confirmPasswordField.touched" class="error">
+        <span *ngIf="confirmPasswordField.errors?.['required']">{{translationService.translate('confirmPassword')}} is required</span>
+      </div>
+      <div *ngIf="password !== confirmPassword && confirmPassword" class="error">
+        Passwords do not match
+      </div>
+    </div>
+    
+    <div *ngIf="errorMessage" class="error">{{errorMessage}}</div>
+    
+    <button type="submit" [disabled]="registerForm.invalid || password !== confirmPassword">
+      {{translationService.translate('register')}}
+    </button>
+    
+    <div class="login-link">
+      <p>Already have an account? 
+        <a href="#" (click)="goToLogin()">{{translationService.translate('login')}}</a>
+      </p>
+    </div>
+  </form>
+</div>

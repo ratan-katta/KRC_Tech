@@ -1,0 +1,174 @@
+<div class="dashboard-layout">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h3>{{translationService.translate('dashboard')}}</h3>
+      <div class="user-profile" *ngIf="currentUser">
+        <div class="profile-info">
+          <div class="profile-name">{{currentUser.fullName}}</div>
+          <div class="profile-username">{{ '@' + currentUser.username }}</div>
+        </div>
+      </div>
+      <div class="language-selector-sidebar">
+        <select [(ngModel)]="selectedLanguage" (change)="onLanguageChange()">
+          <option *ngFor="let lang of translationService.languages" [value]="lang.code">
+            {{lang.name}}
+          </option>
+        </select>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div *ngFor="let item of menuItems" 
+           class="nav-item" 
+           [class.active]="activeRoute === item.id"
+           (click)="navigateTo(item.id)">
+        <span class="nav-icon">{{item.icon}}</span>
+        <span class="nav-label">{{translationService.translate(item.label)}}</span>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <button (click)="logout()" class="btn-logout">{{translationService.translate('logout')}}</button>
+    </div>
+  </div>
+  
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="content-header">
+      <h2>{{translationService.translate(activeRoute)}}</h2>
+    </div>
+    
+    <!-- Overview Content -->
+    <div *ngIf="activeRoute === 'overview'" class="content-section">
+      <div class="analytics-grid">
+        <div class="stat-card">
+          <div class="stat-icon">👥</div>
+          <div class="stat-content">
+            <h3>{{totalEmployees}}</h3>
+            <p>{{translationService.translate('totalEmployees')}}</p>
+          </div>
+        </div>
+        
+        <div class="chart-card">
+          <h3>Department Distribution</h3>
+          <div class="chart-container">
+            <div *ngFor="let stat of departmentStats" class="bar-chart">
+              <div class="bar-label">{{stat.dept}}</div>
+              <div class="bar-container">
+                <div class="bar" [style.width.%]="(stat.count / totalEmployees) * 100"></div>
+                <span class="bar-value">{{stat.count}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="chart-card">
+          <h3>Position Distribution</h3>
+          <div class="chart-container">
+            <div *ngFor="let stat of positionStats" class="bar-chart">
+              <div class="bar-label">{{stat.position}}</div>
+              <div class="bar-container">
+                <div class="bar position-bar" [style.width.%]="(stat.count / totalEmployees) * 100"></div>
+                <span class="bar-value">{{stat.count}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Employees Content -->
+    <div *ngIf="activeRoute === 'employees'" class="content-section">
+      <div class="section-header">
+        <h3>{{translationService.translate('employeeManagement')}}</h3>
+        <button (click)="showEmployeeForm = !showEmployeeForm" class="btn-primary">{{translationService.translate('addEmployee')}}</button>
+      </div>
+      
+      <div *ngIf="showEmployeeForm" class="form-container">
+        <h4>{{editingEmployee ? translationService.translate('edit') : translationService.translate('addEmployee')}}</h4>
+        <form (ngSubmit)="addEmployee()">
+          <input [(ngModel)]="newEmployee.name" name="empName" [placeholder]="translationService.translate('name')" required>
+          <input [(ngModel)]="newEmployee.email" name="empEmail" [placeholder]="translationService.translate('email')" required>
+          <input [(ngModel)]="newEmployee.department" name="empDept" [placeholder]="translationService.translate('department')" required>
+          <input [(ngModel)]="newEmployee.position" name="empPos" [placeholder]="translationService.translate('position')" required>
+          <div class="form-buttons">
+            <button type="submit" class="btn-success">{{editingEmployee ? 'Update' : 'Add'}}</button>
+            <button type="button" (click)="resetEmployeeForm()" class="btn-secondary">Cancel</button>
+          </div>
+        </form>
+      </div>
+      
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>{{translationService.translate('name')}}</th>
+            <th>{{translationService.translate('email')}}</th>
+            <th>{{translationService.translate('department')}}</th>
+            <th>{{translationService.translate('position')}}</th>
+            <th>{{translationService.translate('actions')}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of employees">
+            <td>{{employee.name}}</td>
+            <td>{{employee.email}}</td>
+            <td>{{employee.department}}</td>
+            <td>{{employee.position}}</td>
+            <td>
+              <button (click)="editEmployee(employee)" class="btn-edit">{{translationService.translate('edit')}}</button>
+              <button (click)="deleteEmployee(employee.id)" class="btn-delete">{{translationService.translate('delete')}}</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- Departments Content -->
+    <div *ngIf="activeRoute === 'departments'" class="content-section">
+      <div class="department-grid">
+        <div *ngFor="let stat of departmentStats" class="department-card">
+          <h3>{{stat.dept}}</h3>
+          <p>{{stat.count}} Employees</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Reports Content -->
+    <div *ngIf="activeRoute === 'reports'" class="content-section">
+      <div class="report-card">
+        <h3>Employee Reports</h3>
+        <p>Total Employees: {{totalEmployees}}</p>
+        <p>Departments: {{departmentStats.length}}</p>
+        <p>Positions: {{positionStats.length}}</p>
+      </div>
+    </div>
+    
+    <!-- Settings Content -->
+    <div *ngIf="activeRoute === 'settings'" class="content-section">
+      <div class="settings-card">
+        <h3>Application Settings</h3>
+        <p>Manage your application preferences here.</p>
+      </div>
+    </div>
+    
+    <!-- Profile Content -->
+    <div *ngIf="activeRoute === 'profile'" class="content-section">
+      <div class="profile-details" *ngIf="currentUser">
+        <h3>User Profile</h3>
+        <div class="profile-card">
+          <div class="profile-field">
+            <label>Full Name:</label>
+            <span>{{currentUser.fullName}}</span>
+          </div>
+          <div class="profile-field">
+            <label>Username:</label>
+            <span>{{currentUser.username}}</span>
+          </div>
+          <div class="profile-field">
+            <label>Email:</label>
+            <span>{{currentUser.email}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
