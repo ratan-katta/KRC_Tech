@@ -26,11 +26,36 @@ body {
   justify-content: space-between;
 }
 
-.company-name {
-  color: #333;
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.logo-text {
+  color: white;
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: 3px;
   margin: 0;
-  font-size: 2.5rem;
-  font-weight: bold;
+  line-height: 1;
+}
+
+.logo-subtext {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin-top: -2px;
 }
 
 
