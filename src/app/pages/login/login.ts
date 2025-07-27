@@ -4,10 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth';
 import { TranslationService } from '../../services/translation';
+import { Register } from '../register/register';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, Register],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
@@ -16,6 +17,9 @@ export class Login {
   password = '';
   errorMessage = '';
   selectedLanguage = 'en';
+  currentTheme = 'light';
+  showPassword = false;
+  showRegister = false;
 
   constructor(
     private authService: AuthService, 
@@ -42,7 +46,18 @@ export class Login {
   }
 
   goToRegister() {
-    console.log('Navigating to register page');
-    this.router.navigate(['/register']);
+    this.showRegister = true;
+  }
+  goToLogin() {
+    this.showRegister = false;
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
+  toggleTheme() {
+    this.currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+    document.body.classList.toggle('dark-theme');
   }
 }

@@ -8,29 +8,34 @@
     </select>
   </div>
   
-  <h2>{{translationService.translate('login')}}</h2>
-  <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label for="username">{{translationService.translate('username')}}:</label>
-      <input type="text" id="username" name="username" [(ngModel)]="username" #usernameField="ngModel" required>
-      <div *ngIf="usernameField.invalid && usernameField.touched" class="error">
-        <span *ngIf="usernameField.errors?.['required']">{{translationService.translate('username')}} is required</span>
+  <ng-container *ngIf="!showRegister; else registerBlock">
+    <h2>{{translationService.translate('login')}}</h2>
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="username">{{translationService.translate('username')}}:</label>
+        <input type="text" id="username" name="username" [(ngModel)]="username" #usernameField="ngModel" required>
+        <div *ngIf="usernameField.invalid && usernameField.touched" class="error">
+          <span *ngIf="usernameField.errors?.['required']">{{translationService.translate('username')}} is required</span>
+        </div>
       </div>
-    </div>
-    <div>
-      <label for="password">{{translationService.translate('password')}}:</label>
-      <input type="password" id="password" name="password" [(ngModel)]="password" #passwordField="ngModel" required>
-      <div *ngIf="passwordField.invalid && passwordField.touched" class="error">
-        <span *ngIf="passwordField.errors?.['required']">{{translationService.translate('password')}} is required</span>
+      <div>
+        <label for="password">{{translationService.translate('password')}}:</label>
+        <input type="password" id="password" name="password" [(ngModel)]="password" #passwordField="ngModel" required>
+        <div *ngIf="passwordField.invalid && passwordField.touched" class="error">
+          <span *ngIf="passwordField.errors?.['required']">{{translationService.translate('password')}} is required</span>
+        </div>
       </div>
-    </div>
-    <div *ngIf="errorMessage" class="error">{{errorMessage}}</div>
-    <button type="submit" [disabled]="loginForm.invalid">{{translationService.translate('login')}}</button>
-    
-    <div class="register-link">
-      <p>Don't have an account? 
-        <button type="button" class="link-button" (click)="goToRegister()">{{translationService.translate('register')}}</button>
-      </p>
-    </div>
-  </form>
+      <div *ngIf="errorMessage" class="error">{{errorMessage}}</div>
+      <button type="submit" [disabled]="loginForm.invalid">{{translationService.translate('login')}}</button>
+      
+      <div class="register-link">
+        <p>Don't have an account? 
+          <button type="button" class="link-button" (click)="goToRegister()">{{translationService.translate('register')}}</button>
+        </p>
+      </div>
+    </form>
+  </ng-container>
+  <ng-template #registerBlock>
+    <app-register (goToLoginEvent)="goToLogin()"></app-register>
+  </ng-template>
 </div>

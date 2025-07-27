@@ -13,11 +13,27 @@ interface User {
 export class AuthService {
   private isLoggedIn = false;
   private currentUser: User | null = null;
-  private users: User[] = [
-    { username: 'admin', password: 'admin', email: 'admin@company.com', fullName: 'Administrator' }
-  ];
+  private users: User[] = [];
 
-  constructor() { }
+  constructor() {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const storedUsers = localStorage.getItem('users');
+      if (storedUsers) {
+        this.users = JSON.parse(storedUsers);
+      } else {
+        // Default admin user
+        this.users = [
+          { username: 'admin', password: 'admin', email: 'admin@company.com', fullName: 'Administrator' }
+        ];
+        localStorage.setItem('users', JSON.stringify(this.users));
+      }
+    } else {
+      // Fallback for SSR: just use in-memory users
+      this.users = [
+        { username: 'admin', password: 'admin', email: 'admin@company.com', fullName: 'Administrator' }
+      ];
+    }
+  }
 
   login(username: string, password: string): boolean {
     console.log('AuthService login called with:', username, password);
@@ -43,6 +59,9 @@ export class AuthService {
     }
     
     this.users.push({ username, password, email, fullName });
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem('users', JSON.stringify(this.users));
+    }
     console.log('User registered successfully. Total users:', this.users.length);
     console.log('All users:', this.users);
     return true;

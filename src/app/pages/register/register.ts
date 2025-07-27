@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -19,6 +19,7 @@ export class Register {
   fullName = '';
   errorMessage = '';
   selectedLanguage = 'en';
+  @Output() goToLoginEvent = new EventEmitter<void>();
 
   constructor(
     private authService: AuthService,
@@ -44,6 +45,6 @@ export class Register {
   }
 
   goToLogin() {
-    this.router.navigate(['/login']);
+    this.goToLoginEvent.emit();
   }
 }
